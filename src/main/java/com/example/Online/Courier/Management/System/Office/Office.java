@@ -4,18 +4,24 @@ import jakarta.persistence.*;
 
 // Office.java
 @Entity
+@Table(name="office")
 public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-
+    @Column(name = "name")
     private String name;
-
+    @Column(name = "location")
     private String location;
 
     public Office(String name, String location) {
         this.name = name;
         this.location = location;
+    }
+
+    public Office() {
+
     }
 // getters and setters
 
