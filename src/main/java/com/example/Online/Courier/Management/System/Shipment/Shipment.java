@@ -1,7 +1,9 @@
 package com.example.Online.Courier.Management.System.Shipment;
+import com.example.Online.Courier.Management.System.Delivery.Delivery;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
