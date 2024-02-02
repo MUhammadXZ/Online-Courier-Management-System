@@ -12,6 +12,9 @@ public class Manager {
     @Column(name = "name")
     private String name;
 
+    public Manager() {
+
+    }
 
 
     // getters and setters

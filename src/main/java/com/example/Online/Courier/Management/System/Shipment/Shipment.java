@@ -23,6 +23,10 @@ public class Shipment {
     @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Delivery> deliveries = new ArrayList<>();;
 
+    public Shipment() {
+
+    }
+
     // getters and setters
 
     public Long getId() {

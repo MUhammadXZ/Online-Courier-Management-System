@@ -19,6 +19,10 @@ public class Delivery {
     @JoinColumn(name = "shipment_id")
     private Shipment shipment;
 
+    public Delivery() {
+
+    }
+
     // getters and setters
 
     public Long getId() {

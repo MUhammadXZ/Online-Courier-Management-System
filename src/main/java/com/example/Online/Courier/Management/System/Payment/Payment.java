@@ -13,6 +13,10 @@ public class Payment {
     @Column(name = "amount")
     private double amount;
 
+    public Payment() {
+
+    }
+
     // Additional fields as needed
 
     // getters and setters
