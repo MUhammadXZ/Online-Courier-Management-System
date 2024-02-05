@@ -29,6 +29,13 @@ public class CustomerController {
         customerService.saveCustomer(customer);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+    @PutMapping("/{customerId}")
+    public ResponseEntity<Customer> updateCustomer(
+            @PathVariable Long customerId,
+            @RequestBody Customer updatedCustomer) {
+        Customer updated = customerService.updateCustomer(customerId, updatedCustomer);
+        return ResponseEntity.ok(updated);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {

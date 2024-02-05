@@ -23,7 +23,6 @@ public class Delivery {
 
     }
 
-    // getters and setters
 
     public Long getId() {
         return id;

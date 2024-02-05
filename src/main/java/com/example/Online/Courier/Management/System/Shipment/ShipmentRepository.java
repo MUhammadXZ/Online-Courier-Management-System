@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ShipmentRepository extends JpaRepository<Shipment, Long> {
-    // Additional methods if needed
 }
 

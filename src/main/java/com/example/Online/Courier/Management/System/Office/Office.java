@@ -23,7 +23,6 @@ public class Office {
     public Office() {
 
     }
-// getters and setters
 
     public Long getId() {
         return id;

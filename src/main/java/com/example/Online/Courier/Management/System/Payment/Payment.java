@@ -17,9 +17,7 @@ public class Payment {
 
     }
 
-    // Additional fields as needed
 
-    // getters and setters
 
     public Long getId() {
         return id;

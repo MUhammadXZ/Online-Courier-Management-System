@@ -27,7 +27,6 @@ public class Shipment {
 
     }
 
-    // getters and setters
 
     public Long getId() {
         return id;
