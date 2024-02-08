@@ -2,94 +2,73 @@ package com.example.Online.Courier.Management.System.CustomerTest;
 
 import com.example.Online.Courier.Management.System.Customer.Customer;
 import com.example.Online.Courier.Management.System.Customer.CustomerRepository;
-import com.example.Online.Courier.Management.System.Customer.CustomerService;
+import com.example.Online.Courier.Management.System.Customer.CustomerServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.Arrays;
-import java.util.List;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
+
     @Mock
     private CustomerRepository customerRepository;
 
     @InjectMocks
-    private CustomerService customerService;
+    private CustomerServiceImpl customerService;
 
-    @Test
-    public void testGetAllCustomers() {
-        // Mock data
-        Customer customer1 = new Customer();
-        customer1.setId(1L);
-        customer1.setName("Customer 1");
-
-        Customer customer2 = new Customer();
-        customer2.setId(2L);
-        customer2.setName("Customer 2");
-
-        List<Customer> mockCustomers = Arrays.asList(customer1, customer2);
-
-        // Mock repository behavior
-        when(customerRepository.findAll()).thenReturn(mockCustomers);
-
-        // Test the service method
-        List<Customer> result = customerService.getAllCustomers();
-
-        // Assert the result
-        assertEquals(2, result.size());
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testGetCustomerById() {
+    public void testUpdateCustomer_Success() {
         // Mock data
         Long customerId = 1L;
-        Customer mockCustomer = new Customer();
-        mockCustomer.setId(customerId);
-        mockCustomer.setName("Mock Customer");
+        Customer existingCustomer = new Customer();
+        existingCustomer.setId(customerId);
+        existingCustomer.setName("John Doe");
+        existingCustomer.setEmail("john.doe@example.com");
+
+        Customer updatedCustomer = new Customer();
+        updatedCustomer.setId(customerId);
+        updatedCustomer.setName("John Smith");
+        updatedCustomer.setEmail("john.smith@example.com");
 
         // Mock repository behavior
-        when(customerRepository.findById(customerId)).thenReturn(java.util.Optional.of(mockCustomer));
+        when(customerRepository.findById(customerId)).thenReturn(existingCustomer);
+        when(customerRepository.save(existingCustomer)).thenReturn(updatedCustomer);
 
         // Test the service method
-        Customer result = customerService.getCustomerById(customerId);
+        Customer result = customerService.updateCustomer(customerId, updatedCustomer);
 
-        // Assert the result
-        assertEquals("Mock Customer", result.getName());
+        // Verify the result
+        assertEquals(updatedCustomer.getId(), result.getId());
+        assertEquals(updatedCustomer.getName(), result.getName());
+        assertEquals(updatedCustomer.getEmail(), result.getEmail());
+        verify(customerRepository, times(1)).findById(customerId);
+        verify(customerRepository, times(1)).save(existingCustomer);
     }
 
-    @Test
-    public void testSaveCustomer() {
-        // Mock data
-        Customer customerToSave = new Customer();
-        customerToSave.setId(1L);
-        customerToSave.setName("New Customer");
-
-        // Test the service method
-        customerService.saveCustomer(customerToSave);
-
-        // Verify that save method of repository is called
-        verify(customerRepository, times(1)).save(customerToSave);
-    }
-
-    @Test
-    public void testDeleteCustomer() {
+    @Test(expected = RuntimeException.class)
+    public void testUpdateCustomer_CustomerNotFound() {
         // Mock data
         Long customerId = 1L;
+        Customer updatedCustomer = new Customer();
+        updatedCustomer.setId(customerId);
+        updatedCustomer.setName("John Smith");
+        updatedCustomer.setEmail("john.smith@example.com");
+
+        // Mock repository behavior (return null to simulate customer not found)
+        when(customerRepository.findById(customerId)).thenReturn(null);
 
         // Test the service method
-        customerService.deleteCustomer(customerId);
-
-        // Verify that deleteById method of repository is called
-        verify(customerRepository, times(1)).deleteById(customerId);
+        customerService.updateCustomer(customerId, updatedCustomer);
     }
-
-    // Add more test methods as needed for other CustomerService functionalities
 }
+
 

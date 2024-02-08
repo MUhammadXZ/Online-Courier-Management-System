@@ -10,31 +10,32 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
+
     @Autowired
     private CustomerService customerService;
-
-    @GetMapping
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
         Customer customer = customerService.getCustomerById(id);
-        return customer != null ? ResponseEntity.ok(customer) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(customer);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        List<Customer> customers = customerService.getAllCustomers();
+        return ResponseEntity.ok(customers);
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveCustomer(@RequestBody Customer customer) {
-        customerService.saveCustomer(customer);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+        Customer createdCustomer = customerService.createCustomer(customer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
     }
-    @PutMapping("/{customerId}")
-    public ResponseEntity<Customer> updateCustomer(
-            @PathVariable Long customerId,
-            @RequestBody Customer updatedCustomer) {
-        Customer updated = customerService.updateCustomer(customerId, updatedCustomer);
-        return ResponseEntity.ok(updated);
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+        Customer updatedCustomer = customerService.updateCustomer(id, customer);
+        return ResponseEntity.ok(updatedCustomer);
     }
 
     @DeleteMapping("/{id}")
@@ -43,4 +44,5 @@ public class CustomerController {
         return ResponseEntity.noContent().build();
     }
 }
+
 

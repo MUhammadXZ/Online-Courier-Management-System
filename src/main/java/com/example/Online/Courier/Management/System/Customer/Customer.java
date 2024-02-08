@@ -1,19 +1,16 @@
 package com.example.Online.Courier.Management.System.Customer;
 
-import jakarta.persistence.*;
+import java.util.Objects;
 
-@Entity
-@Table(name="customer")
+
 public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     private Long id;
-    @Column(name = "name")
+
     private String name;
-    @Column(name = "email")
+
     private String email;
-    @Column(name = "phone_number")
+
     private String phoneNumber;
 
     public Customer() {

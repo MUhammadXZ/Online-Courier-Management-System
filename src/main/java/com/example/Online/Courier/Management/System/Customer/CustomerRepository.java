@@ -1,8 +1,11 @@
 package com.example.Online.Courier.Management.System.Customer;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository {
+    Customer findById(Long id);
+    List<Customer> findAll();
+    Customer save(Customer customer);
+    void delete(Long id);
 }
+
