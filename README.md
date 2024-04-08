@@ -47,7 +47,7 @@ Clone the repository:
 
 
 
-git clone https://github.com/KingCanute1011/Online-Courier-Management-System.git
+git clone https://github.com/MUhammadXZ/Online-Courier-Management-System.git
 
 Build the project:
 
